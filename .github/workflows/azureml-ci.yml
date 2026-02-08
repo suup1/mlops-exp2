@@ -19,8 +19,5 @@ jobs:
       run: |
         az extension add -n ml
     
-    - name: Verify Azure ML workspace
-      run: az ml workspace show --name "${{ secrets.AZURE_ML_WORKSPACE }}" --resource-group "${{ secrets.AZURE_RESOURCE_GROUP }}"
-
     - name: Submit Azure ML Job
       run: az ml job create --file azure/job.yml --resource-group "${{ secrets.AZURE_RESOURCE_GROUP }}" --workspace-name "${{ secrets.AZURE_ML_WORKSPACE }}"
