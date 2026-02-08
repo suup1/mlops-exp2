@@ -1,23 +1,15 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
 type: command
 
-inputs:
-  lr:
-    type: string
-    default: "0.01"
-  epochs:
-    type: string
-    default: "5"
-
 code: .
 
 command: >
   python src/train.py
-  --lr ${{inputs.lr}}
-  --epochs ${{inputs.epochs}}
+  --lr 0.01
+  --epochs 10
 
 environment: azureml:AzureML-sklearn-1.0-ubuntu20.04-py38-cpu@latest
 compute: azureml:cpu-cluster
 
 experiment_name: exp3-params-metrics
-description: Experiment 3 – parameters and metrics logging
+description: Experiment 3 - parameterized training and metric logging
