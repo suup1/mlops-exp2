@@ -7,17 +7,26 @@ jobs:
   train:
     runs-on: ubuntu-22.04
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Install Azure ML CLI
-      run: |
-        az extension add -n ml
-    
-    - name: Submit Azure ML Job
-      run: az ml job create --file azure/job.yml --resource-group "${{ secrets.AZURE_RESOURCE_GROUP }}" --workspace-name "${{ secrets.AZURE_ML_WORKSPACE }}"
+      - name: Install Azure ML CLI
+        run: |
+          az extension add -n ml
+
+      - name: Debug secrets
+        run: |
+          echo "Workspace = '${{ secrets.AZURE_ML_WORKSPACE }}'"
+          echo "Resource group = '${{ secrets.AZURE_RESOURCE_GROUP }}'"
+
+      - name: Submit Azure ML Job
+        run: |
+          az ml job create \
+            --file azure/job.yml \
+            --resource-group "${{ secrets.AZURE_RESOURCE_GROUP }}" \
+            --workspace-name "${{ secrets.AZURE_ML_WORKSPACE }}"
