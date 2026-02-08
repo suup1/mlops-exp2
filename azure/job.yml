@@ -3,11 +3,11 @@ type: command
 
 inputs:
   lr:
-    type: number
-    default: 0.01
+    type: string
+    default: "0.01"
   epochs:
-    type: integer
-    default: 5
+    type: string
+    default: "5"
 
 code: .
 
