@@ -1,13 +1,30 @@
-from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
+import argparse
+import mlflow
+import time
+import random
 
-X, y = load_iris(return_X_y=True)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+parser = argparse.ArgumentParser()
+parser.add_argument("--lr", type=float, default=0.01)
+parser.add_argument("--epochs", type=int, default=5)
+args = parser.parse_args()
 
-model = RandomForestClassifier()
-model.fit(X_train, y_train)
+lr = args.lr
+epochs = args.epochs
 
-preds = model.predict(X_test)
-print("Accuracy:", accuracy_score(y_test, preds))
+mlflow.start_run()
+
+# Log parameters
+mlflow.log_param("learning_rate", lr)
+mlflow.log_param("epochs", epochs)
+
+accuracy = 0.0
+
+for epoch in range(epochs):
+    time.sleep(1)  # simulate training
+    accuracy += random.uniform(0.05, 0.15)
+    mlflow.log_metric("accuracy", accuracy, step=epoch)
+
+mlflow.end_run()
+
+print("Training completed")
+print(f"Final accuracy: {accuracy}")
