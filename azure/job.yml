@@ -1,7 +1,13 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+type: command
+
+code: .
 
 command: python src/train.py
-environment: azureml:exp1-env@latest
-compute: azureml:exp1-ci
+
+environment: azureml:AzureML-sklearn-1.0-ubuntu20.04-py38-cpu@latest
+
+compute: azureml:cpu-cluster
+
 experiment_name: exp2-ci-cd
 description: GitHub Actions triggered Azure ML job
