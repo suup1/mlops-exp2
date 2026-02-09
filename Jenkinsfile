@@ -2,18 +2,17 @@ pipeline {
     agent any
 
     stages {
+
         stage('Environment Check') {
             steps {
-
                 bat 'python --version'
             }
         }
 
-
         stage('Install Dependencies') {
             steps {
-                bat 'pip install --upgrade pip'
-                bat 'pip install scikit-learn joblib'
+                bat 'python -m pip install --upgrade pip'
+                bat 'python -m pip install scikit-learn joblib'
             }
         }
 
