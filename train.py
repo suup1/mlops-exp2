@@ -28,4 +28,3 @@ os.makedirs("artifacts", exist_ok=True)
 joblib.dump(model, "artifacts/model.joblib")
 
 print("Training completed successfully.")
-`
