@@ -1,12 +1,31 @@
-import time
-import random
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import joblib
+import os
 
-print("=== Experiment 3: Jenkins ML Training Started ===")
+print("Loading dataset...")
+X, y = load_iris(return_X_y=True)
 
-# Simulated training loop
-for epoch in range(1, 6):
-    loss = random.uniform(0.2, 0.6)
-    print(f"Epoch {epoch} - loss: {loss:.4f}")
-    time.sleep(1)
+print("Splitting data...")
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
 
-print("=== Training Completed Successfully ===")
+print("Training model...")
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+print("Evaluating model...")
+predictions = model.predict(X_test)
+accuracy = accuracy_score(y_test, predictions)
+
+print(f"Model accuracy: {accuracy}")
+
+print("Saving model...")
+os.makedirs("artifacts", exist_ok=True)
+joblib.dump(model, "artifacts/model.joblib")
+
+print("Training completed successfully.")
+`

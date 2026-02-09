@@ -4,8 +4,14 @@ pipeline {
     stages {
         stage('Environment Check') {
             steps {
-                bat 'java -version'
                 bat 'python --version'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                bat 'pip install --upgrade pip'
+                bat 'pip install scikit-learn joblib'
             }
         }
 
@@ -13,6 +19,21 @@ pipeline {
             steps {
                 bat 'python train.py'
             }
+        }
+
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: 'artifacts/**', fingerprint: true
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Experiment 3: Jenkins automated ML training completed successfully'
+        }
+        failure {
+            echo 'Experiment 3 failed'
         }
     }
 }
